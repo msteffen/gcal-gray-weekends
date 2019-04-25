@@ -1,8 +1,11 @@
 ### A chrome extension that colors weekends gray in Google calendar
 
-- This is still very basic. If anybody else ever uses it, I might try to add a
-  color picker or something (or let you customize which days are colored
-  differently, in case you work a four-day week or something)
+![Screenshot of the extension](images/screenshot.png)
+
+This is still very basic. If anybody else ever uses it, I might try to add a
+color picker or something (or let you customize which days are colored
+differently, in case you work a four-day week or something)
+
 - Not knowing much about JS or Chrome plugins, I borrowed the basic structure
   for this from https://github.com/imightbeamy/gcal-multical-event-merge
 - The only elements that need to be modified are the ones with a `data-datekey`
