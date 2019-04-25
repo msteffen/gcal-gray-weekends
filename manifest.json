@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "name": "Google Calendar gray weekends",
+  "version": "0.1",
+  "content_scripts": [
+    {
+      "matches": ["https://calendar.google.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
