@@ -1,5 +1,7 @@
 ### A chrome extension that colors weekends gray in Google calendar
 
+Available on the Chrome web store here: https://chrome.google.com/webstore/detail/google-calendar-gray-week/anbpifeeedchofljolkgmleojmelihom
+
 ![Screenshot of the extension](images/screenshot.png)
 
 This is still very basic. If anybody else ever uses it, I might try to add a
@@ -14,12 +16,10 @@ differently, in case you work a four-day week or something)
 - The most interesting part of this whole project has been figuring out how the
   `data-datekey` property works. It represents a date as mixed-radix number
   of the form `Y*512 + M*32 + D`
-    - it uses 1/1/1970 as epoch, so given a `data-datekey = N = Y*512 + M*32 +
-      D"`, the actual date corresponding to `N` is `D/M/1970+Y`
+    - it uses 1/1/1970 as epoch, so given a `data-datekey = N = Y*512 + M*32 + D"`, the actual date corresponding to `N` is `M/D/1970+Y`
     - The lowest value of `data-datekey`, not surprisingly, is for 1/1/1970,
       though if you navigate there, you'll see that it has `data-datekey="33"`,
-      rather than `"0"`, corresponding to `M = 1, D = 1, Y = 0 => 512*0 + 32*1
-      + 1 = 33`
+      rather than `"0"`, corresponding to `M = 1, D = 1, Y = 0 => 512*0 + 32*1 + 1 = 33`
     - Dates before 1/1/1970 are represented using a negative `data-datekey`. The
       largest such value `12/31/1969 = 512*-1 + 32*12 + 31 = -97`
     - Moreover, having every radix be a power of 2 means that `data-datekey` can
