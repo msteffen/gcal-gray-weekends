@@ -26,9 +26,9 @@ differently, in case you work a four-day week or something)
       be converted to M/D/Y using only bitwise operators (shifts and masks)
 
 Personal note: I also realized as part of this that dividing by 512 using `>>9`
-actually "fixes" division. If we define the integral quotient `X/Y` to be
-largest integer Z such that `Z*Y < X`, then `-1/512 = -1`, as returned by
+actually "fixes" division. If we define the integral quotient `idiv(X,Y)` to be
+largest integer Z such that `Z*Y < X`, then `idiv(-1, 512) = -1`, as returned by
 `-1>>9` but not by `-1/512`. If `/` worked this way as well, then `X%Y` would
-never be negative (but we'd still have `Y*(X/Y) + (X%Y) = X`, which requires
+never be negative (but we'd still preserve `Y*(X/Y) + (X%Y) = X`, which requires
 `X%Y` to be negative given the current convention for `/`). This would have
 avoided a lot of array indexing bugs that I've written in my life
