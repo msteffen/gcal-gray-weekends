@@ -1,3 +1,7 @@
+// grayOutWeekends is called on any DOM mutations that affect the calendar
+// element (e.g. user going to the next/previous month) and is responsible for
+// pulling the calendar element out of the mutation object and re-coloring the
+// appropriate divs inside the calendar element (with 'applyColor').
 function grayOutWeekends(mutList) {
   if (mutList != undefined) {
     mutList
@@ -7,10 +11,15 @@ function grayOutWeekends(mutList) {
   }
 }
 
+// applyColor recolors the appropriate divs in the calendar element, passed in
+// 'mainCal' by 'grayOutWeekends' (which calls this when the calendar element
+// changes) and 'chrome.storage.onChanged' at the bottom (which calls this when
+// the user's settings change).
 function applyColor(mainCal) {
   let nodes = mainCal.querySelectorAll(
     "div[role='columnheader'],div[data-datekey]:not([jsaction])");
   for (const node of nodes) {
+    // color header divs (containing e.g. "Sun")
     if (node.getAttribute("role") == "columnheader") {
       // This is a gross hack, but inspecting the page shows that the first
       // child is a <span> containing "Sat/Sun" or "Saturday/Sunday"
@@ -19,6 +28,9 @@ function applyColor(mainCal) {
       }
       continue;
     }
+
+    // color date divs (for a particular date. See README on github for
+    // discussion of 'data-datekey').
     let datekey = node.getAttribute("data-datekey");
     if (!datekey) {
       console.log("could not read expected attribute 'data-datekey'");
@@ -30,7 +42,7 @@ function applyColor(mainCal) {
     let day = datekey & 31;
     let date = new Date(
       1970 + year,
-      month - 1, // JS date indexes months from 0 for some reason
+      month - 1, // JS date indexes months from 0 but gcal does not
       day);
     let dayOfWeek = date.getDay();
     if (dayOfWeek == 0 || dayOfWeek == 6) {
@@ -39,6 +51,7 @@ function applyColor(mainCal) {
   }
 }
 
+// Update color whenever the DOM is updated
 mut = new MutationObserver(grayOutWeekends);
 mut.observe(document.body, {
   "subtree": true,
