@@ -8,7 +8,7 @@ function grayOutWeekends(mutList) {
 }
 
 function grayOutDay(mainCal) {
-  var nodes = mainCal.querySelectorAll(
+  let nodes = mainCal.querySelectorAll(
     "div[role='columnheader'],div[data-datekey]:not([jsaction])")
   for (node of nodes) {
     if (node.getAttribute("role") == "columnheader") {
@@ -19,20 +19,20 @@ function grayOutDay(mainCal) {
       }
       continue
     }
-    var datekey = node.getAttribute("data-datekey");
+    let datekey = node.getAttribute("data-datekey");
     if (!datekey) {
       console.log("could not read expected attribute 'data-datekey'")
       continue
     }
     datekey = parseInt(datekey)
-    var year = datekey>>9
-    var month = (datekey & 511)>>5
-    var day = datekey & 31
-    var date = new Date(
+    let year = datekey>>9
+    let month = (datekey & 511)>>5
+    let day = datekey & 31
+    let date = new Date(
       1970 + year,
       month - 1, // JS date indexes months from 0 for some reason
       day);
-    var dayOfWeek = date.getDay();
+    let dayOfWeek = date.getDay();
     if (dayOfWeek == 0 || dayOfWeek == 6) {
       node.style.backgroundColor = "#eeeeee";
     }
