@@ -10,7 +10,7 @@ function grayOutWeekends(mutList) {
 function applyColor(mainCal) {
   let nodes = mainCal.querySelectorAll(
     "div[role='columnheader'],div[data-datekey]:not([jsaction])");
-  for (node of nodes) {
+  for (const node of nodes) {
     if (node.getAttribute("role") == "columnheader") {
       // This is a gross hack, but inspecting the page shows that the first
       // child is a <span> containing "Sat/Sun" or "Saturday/Sunday"
