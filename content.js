@@ -3,11 +3,11 @@ function grayOutWeekends(mutList) {
     mutList
       .map(mutation => mutation.addedNodes[0] || mutation.target)
       .filter(node => node.matches && node.matches("[role='main']"))
-      .map(grayOutDay);
+      .map(applyColor);
   }
 }
 
-function grayOutDay(mainCal) {
+function applyColor(mainCal) {
   let nodes = mainCal.querySelectorAll(
     "div[role='columnheader'],div[data-datekey]:not([jsaction])");
   for (node of nodes) {
