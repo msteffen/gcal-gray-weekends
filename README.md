@@ -4,9 +4,8 @@ Available on the Chrome web store here: https://chrome.google.com/webstore/detai
 
 ![Screenshot of the extension](images/screenshot.png)
 
-This is still very basic. If anybody else ever uses it, I might try to add a
-color picker or something (or let you customize which days are colored
-differently, in case you work a four-day week or something)
+This is still very basic, but I've added all the features I'd planned,
+including a basic color picker. I may add more features if they're requested.
 
 - Not knowing much about JS or Chrome plugins, I borrowed the basic structure
   for this from https://github.com/imightbeamy/gcal-multical-event-merge
