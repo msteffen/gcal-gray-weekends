@@ -33,7 +33,6 @@ function applyColor(mainCal) {
     // discussion of 'data-datekey').
     let datekey = node.getAttribute("data-datekey");
     if (!datekey) {
-      console.log("could not read expected attribute 'data-datekey'");
       continue;
     }
     datekey = parseInt(datekey);
