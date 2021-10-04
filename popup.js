@@ -66,6 +66,10 @@ function storeColors() {
 // 'defaultSettings'.  It works by setting the value of the color inputs
 // directly, and then calling storeColors();
 function resetDefaults() {
+  if (!confirm("Are you sure you want to reset to default colors? This will "+
+               "erase your custom settings.")) {
+    return;
+  }
   for (const day of days) {
     document.getElementById(day).value = defaultSettings[day];
   }
