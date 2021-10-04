@@ -102,3 +102,14 @@ mut.observe(document.body, {
   "childList": true,
   "attributes": true
 });
+
+// Update colors whenever settings change
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  for (let [key, {newValue}] of Object.entries(changes)) {
+    if (key != settingsKey) {
+      continue;
+    }
+    Object.assign(cachedSettings, newValue);
+    applyColor(document.querySelectorAll("div[role='main']")[0]);
+  }
+});
