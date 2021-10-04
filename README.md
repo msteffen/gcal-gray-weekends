@@ -3,6 +3,7 @@
 Available on the Chrome web store here: https://chrome.google.com/webstore/detail/google-calendar-gray-week/anbpifeeedchofljolkgmleojmelihom
 
 ![Screenshot of the extension](images/screenshot.png)
+![Screenshot of the color selector](images/screenshot_color_selector.png)
 
 This is still very basic, but I've added all the features I'd planned,
 including a basic color picker. I may add more features if they're requested.
