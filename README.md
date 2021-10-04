@@ -2,7 +2,16 @@
 
 Available on the Chrome web store here: https://chrome.google.com/webstore/detail/google-calendar-gray-week/anbpifeeedchofljolkgmleojmelihom
 
-![Screenshot of the extension](images/screenshot.png)
+<table>
+  <tr>
+    <td>
+      <img src="https://raw.githubusercontent.com/msteffen/gcal-gray-weekends/master/images/screenshot.png" alt="Screenshot of the extension" width="450"/>
+    </td>
+    <td>
+      <img src="https://raw.githubusercontent.com/msteffen/gcal-gray-weekends/master/images/screenshot_color_selector.png" alt="Screenshot of the color selector" width="450"/>
+    </td>
+  </tr>
+</table>
 
 This is still very basic, but I've added all the features I'd planned,
 including a basic color picker. I may add more features if they're requested.
