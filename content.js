@@ -1,8 +1,58 @@
+// days is an Array mapping the output of date.getDay() to a key in the
+// settings object
+const days = [ "sun"
+              , "mon"
+              , "tue"
+              , "wed"
+              , "thu"
+              , "fri"
+              , "sat" ];
+
+// defaultSettings stores the default "color settings" object, which is used if
+// none is stored in chrome.storage under 'settingsKey'
+const defaultSettings = { "sun": "#eeeeee"
+                        , "mon": "#ffffff"
+                        , "tue": "#ffffff"
+                        , "wed": "#ffffff"
+                        , "thu": "#ffffff"
+                        , "fri": "#ffffff"
+                        , "sat": "#eeeeee" };
+
+// settingsKey is the key in chrome.storage containing the user's current color
+// settings (see 'cachedSettings' for usage description and 'defaultSettings'
+// for an example value).
+const settingsKey = "gcal_gray_weekends_colors";
+
+// cachedSettings holds the object mapping day of week ('sun', 'mon', ...) to
+// the user's preferred color (read from chrome.storage). See 'defaultSettings'
+// for an example.
+const cachedSettings = {};
+
+// initSettings tries to read the user's color settings from chrome.storage and
+// store the result in cachedSettings. It stores 'defaultSettings' in
+// 'cachedSettings' if the read fails.
+const initSettings = new Promise((resolve) => {
+  chrome.storage.sync.get([settingsKey], (result) => {
+    if (result && result[settingsKey] && result[settingsKey].sun) {
+      Object.assign(cachedSettings, result[settingsKey]);
+    } else {
+      if (chrome.runtime.lastError) {
+        console.warn(
+          "could not get gcal_gray_weekend settings (using default settings): ",
+          chrome.runtime.lastError);
+      }
+      Object.assign(cachedSettings, defaultSettings);
+    }
+    resolve();
+  });
+});
+
 // grayOutWeekends is called on any DOM mutations that affect the calendar
 // element (e.g. user going to the next/previous month) and is responsible for
 // pulling the calendar element out of the mutation object and re-coloring the
 // appropriate divs inside the calendar element (with 'applyColor').
-function grayOutWeekends(mutList) {
+async function grayOutWeekends(mutList) {
+  await initSettings;
   if (mutList != undefined) {
     mutList
       .map(mutation => mutation.addedNodes[0] || mutation.target)
@@ -21,11 +71,8 @@ function applyColor(mainCal) {
   for (const node of nodes) {
     // color header divs (containing e.g. "Sun")
     if (node.getAttribute("role") == "columnheader") {
-      // This is a gross hack, but inspecting the page shows that the first
-      // child is a <span> containing "Sat/Sun" or "Saturday/Sunday"
-      if (node.children[0].innerHTML[0] == "S") {
-        node.style.backgroundColor = "#eeeeee";
-      }
+      let day = node.children[0].innerHTML.slice(0,3).toLowerCase();
+      node.style.backgroundColor = cachedSettings[day];
       continue;
     }
 
@@ -44,9 +91,7 @@ function applyColor(mainCal) {
       month - 1, // JS date indexes months from 0 but gcal does not
       day);
     let dayOfWeek = date.getDay();
-    if (dayOfWeek == 0 || dayOfWeek == 6) {
-      node.style.backgroundColor = "#eeeeee";
-    }
+    node.style.backgroundColor = cachedSettings[days[dayOfWeek]];
   }
 }
 
